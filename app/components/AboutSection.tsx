@@ -3,28 +3,35 @@
 import { motion } from "framer-motion";
 
 const skills = {
-  "AI / ML & Gen AI": [
-    { name: "Python", color: "#3776AB" },
-    { name: "TensorFlow", color: "#FF6F00" },
-    { name: "FastAPI", color: "#009688" },
-    { name: "LangChain", color: "#32C770" },
-    { name: "Ollama", color: "#FFFFFF" },
-    { name: "OpenAI", color: "#412991" },
-  ],
-  "Web & Full-Stack": [
-    { name: "ReactJS", color: "#61DAFB" },
-    { name: "React Native", color: "#61DAFB" },
-    { name: "Next.js", color: "#FFFFFF" },
-    { name: "TailwindCSS", color: "#06B6D4" },
+  "Languages": [
+    { name: "Python", color: "#4B8BBE" },
+    { name: "C++", color: "#659AD2" },
+    { name: "JavaScript/TypeScript", color: "#3178C6" },
+    { name: "SQL", color: "#5084AB" },
     { name: "PHP", color: "#777BB4" },
-    { name: "Electron", color: "#47848F" },
   ],
-  "Cloud, DevOps & Data": [
-    { name: "GCP", color: "#4285F4" },
+  "Cloud & DevOps": [
     { name: "Docker", color: "#2496ED" },
-    { name: "Ubuntu", color: "#E95420" },
+    { name: "CI/CD", color: "#FFFFFF" },
+    { name: "GCP", color: "#4285F4" },
+    { name: "AWS", color: "#FF9900" },
+    { name: "Linux (Ubuntu)", color: "#E95420" },
+    { name: "Nginx", color: "#00B345" },
+  ],
+  "Frameworks/Libraries": [
+    { name: "ReactJS", color: "#61DAFB" },
+    { name: "Node.js", color: "#43BA43" },
+    { name: "FastAPI", color: "#009688" },
+    { name: "ExpressJS", color: "#FFFFFF" },
+    { name: "TensorFlow", color: "#FF6F00" },
+    { name: "MediaPipe", color: "#00BCD4" },
+  ],
+  "Databases": [
+    { name: "PostgreSQL", color: "#4182B8" },
     { name: "Supabase", color: "#3ECF8E" },
+    { name: "MongoDB", color: "#52BA53" },
     { name: "SQLite3", color: "#0487CA" },
+    { name: "Vector DBs (pgvector)", color: "#00EA64" },
   ],
 };
 

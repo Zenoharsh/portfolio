@@ -100,7 +100,7 @@ export default function HeroSection() {
           </button>
 
           <div className="flex items-center gap-3">
-            {socials.map(({ icon: Icon, href, label, isLucide }) => (
+            {socials.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
                 href={href}
@@ -115,11 +115,7 @@ export default function HeroSection() {
                   hover:bg-white/10 hover:border-white/20 hover:scale-110
                 "
               >
-                {isLucide ? (
-                  <Icon size={18} className="text-white/60 transition-colors duration-300 group-hover:text-white/90" strokeWidth={1.8} />
-                ) : (
-                  <Icon size={18} className="text-white/60 transition-colors duration-300 group-hover:text-white/90" />
-                )}
+                <Icon size={18} className="text-white/60 transition-colors duration-300 group-hover:text-white/90" />
               </a>
             ))}
           </div>

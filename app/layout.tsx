@@ -28,13 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col relative bg-transparent">
         <InteractiveBackground />
-        {/* Real Glass SVG Filter */}
-        <svg width="0" height="0" className="hidden absolute">
-          <filter id="lg">
-            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </svg>
+
         {children}
       </body>
     </html>

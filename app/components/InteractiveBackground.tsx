@@ -197,8 +197,8 @@ export default function InteractiveBackground() {
       // 50px cells for spatial hashing
       grid = new SpatialHashGrid(canvas.width, canvas.height, 50);
       
-      // Because we optimized it so heavily, we can increase the particle count!
-      const numberOfParticles = Math.floor(Math.min(window.innerWidth / 2, 800) * 1.1); 
+      // Reduced particle count by 30% as requested
+      const numberOfParticles = Math.floor(Math.min(window.innerWidth / 2, 800) * 0.75); 
       for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle(canvas.width, canvas.height));
       }

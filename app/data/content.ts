@@ -35,7 +35,7 @@ export const projects: Project[] = [
   },
   {
     id: "iemo",
-    title: "IEMO",
+    title: "IEMO(Intelligent Email Management Opus)",
     description: "Automated intelligent email organization by developing a context-aware AI agent utilizing Gemini LLM and LangChain to parse and structure complex inbox data streams.",
     image: "/iemo.png",
     tags: ["ReactJS", "LangChain", "GCP", "Supabase"],

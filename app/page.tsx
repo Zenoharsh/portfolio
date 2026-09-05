@@ -27,9 +27,7 @@ export default function Home() {
             <ExperienceSection />
           </AnimatedSection>
           
-          <AnimatedSection delay={0.1} className="px-0 md:px-0 lg:px-0">
-            {/* We override padding here so the carousel can bleed to edges if it wants, 
-                but we can keep it contained. Actually, we'll keep standard padding. */}
+          <AnimatedSection delay={0.1}>
             <ProjectsSection />
           </AnimatedSection>
           

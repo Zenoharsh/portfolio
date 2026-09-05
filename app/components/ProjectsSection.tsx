@@ -229,13 +229,13 @@ export default function ProjectsSection() {
                 border transition-all duration-500 ease-out cursor-pointer
                 ${
                   isActive
-                    ? "bg-white/10 border-white/20 text-white/90 shadow-[0_0_20px_rgba(255,255,255,0.08)] scale-105"
+                    ? "bg-[#00ea64]/10 border-[#00ea64]/30 text-[#00ea64] shadow-[0_0_20px_rgba(0,234,100,0.1)] scale-105"
                     : "bg-white/[0.03] border-white/[0.07] text-white/60 hover:bg-white/[0.06] hover:border-white/15 hover:text-white/80"
                 }
               `}
             >
               {isActive && (
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#00ea64]/15 via-transparent to-transparent opacity-50 pointer-events-none" />
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#00ea64]/20 via-[#00ea64]/5 to-transparent opacity-50 pointer-events-none" />
               )}
               <span className="relative pointer-events-none">{label}</span>
             </button>
