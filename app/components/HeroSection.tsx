@@ -27,7 +27,7 @@ function XIcon({ size = 17, className = "" }: { size?: number; className?: strin
 
 const socials = [
   { icon: GithubIcon, href: "https://github.com/Zenoharsh", label: "GitHub" },
-  { icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: LinkedinIcon, href: "https://www.linkedin.com/in/harsh-raj-422b801a9/", label: "LinkedIn" },
   { icon: XIcon, href: "https://twitter.com", label: "Twitter" },
   { icon: Globe, href: "https://codeforces.com", label: "Codeforces", isLucide: true },
 ];

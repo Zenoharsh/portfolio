@@ -36,13 +36,13 @@ export default function ContactSection() {
           </div>
 
           <div className="space-y-4">
-            <a href="mailto:harshraj@example.com" className="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+            <a href="mailto:harsh.dev4u@gmail.com" className="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
               <div className="p-3 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
                 <Mail size={20} />
               </div>
-              <span className="font-medium">harshraj@example.com</span>
+              <span className="font-medium">harsh.dev4u@gmail.com</span>
             </a>
-            <a href="https://linkedin.com/in/zenoharsh" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
+            <a href="https://www.linkedin.com/in/harsh-raj-422b801a9/" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-gray-300 hover:text-white transition-colors group">
               <div className="p-3 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
                 <ArrowUpRight size={20} />
               </div>
