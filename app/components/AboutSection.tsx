@@ -7,14 +7,14 @@ const skills = {
     { name: "Python", color: "#3776AB" },
     { name: "TensorFlow", color: "#FF6F00" },
     { name: "FastAPI", color: "#009688" },
-    { name: "LangChain", color: "#1C3C3C" },
+    { name: "LangChain", color: "#32C770" },
     { name: "Ollama", color: "#FFFFFF" },
     { name: "OpenAI", color: "#412991" },
   ],
   "Web & Full-Stack": [
     { name: "ReactJS", color: "#61DAFB" },
     { name: "React Native", color: "#61DAFB" },
-    { name: "Next.js", color: "#000000" },
+    { name: "Next.js", color: "#FFFFFF" },
     { name: "TailwindCSS", color: "#06B6D4" },
     { name: "PHP", color: "#777BB4" },
     { name: "Electron", color: "#47848F" },
@@ -24,7 +24,7 @@ const skills = {
     { name: "Docker", color: "#2496ED" },
     { name: "Ubuntu", color: "#E95420" },
     { name: "Supabase", color: "#3ECF8E" },
-    { name: "SQLite3", color: "#003B57" },
+    { name: "SQLite3", color: "#0487CA" },
   ],
 };
 
