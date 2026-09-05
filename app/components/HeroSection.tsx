@@ -28,7 +28,7 @@ function LeetCodeIcon({ size = 17, className = "" }: { size?: number; className?
 const socials = [
   { icon: GithubIcon, href: "https://github.com/Zenoharsh", label: "GitHub" },
   { icon: LinkedinIcon, href: "https://www.linkedin.com/in/harsh-raj-422b801a9/", label: "LinkedIn" },
-  { icon: LeetCodeIcon, href: "https://leetcode.com/u/Zenoharsh/", label: "LeetCode" },
+  { icon: LeetCodeIcon, href: "https://leetcode.com/u/zenoharsh/", label: "LeetCode" },
 ];
 
 export default function HeroSection() {
