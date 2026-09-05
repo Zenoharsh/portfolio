@@ -81,7 +81,8 @@ export default function HeroSection() {
 
         {/* Action Row */}
         <div className="hero-subtitle flex items-center gap-6 mt-12">
-          <button
+          <a
+            href="mailto:harsh.dev4u@gmail.com"
             className="
               group flex items-center justify-between gap-4
               h-12 px-5 rounded-full
@@ -97,7 +98,7 @@ export default function HeroSection() {
             <span className="flex items-center justify-center h-7 w-7 rounded-full bg-white text-black transition-transform duration-300 group-hover:scale-110">
               <ArrowUpRight size={14} strokeWidth={2.5} />
             </span>
-          </button>
+          </a>
 
           <div className="flex items-center gap-3">
             {socials.map(({ icon: Icon, href, label }) => (

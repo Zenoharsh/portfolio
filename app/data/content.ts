@@ -30,8 +30,9 @@ export const projects: Project[] = [
     image: "/dtf.png",
     tags: ["FastAPI", "Ollama", "PHP", "Ubuntu"],
     filterIds: ["aiml", "fullstack"],
-    href: "https://github.com/Zenoharsh/Dtf_rag",
+    href: "https://dtforg.in",
     githubUrl: "https://github.com/Zenoharsh/Dtf_rag",
+    liveUrl: "https://dtforg.in",
   },
   {
     id: "iemo",
@@ -50,8 +51,9 @@ export const projects: Project[] = [
     image: "/brain.png",
     tags: ["Full-Stack", "UI/UX", "Freelance"],
     filterIds: ["fullstack", "freelance"],
-    href: "https://github.com/Zenoharsh/BRAIN",
+    href: "https://brainfoundation.in",
     githubUrl: "https://github.com/Zenoharsh/BRAIN",
+    liveUrl: "https://brainfoundation.in",
   },
   {
     id: "drishti",

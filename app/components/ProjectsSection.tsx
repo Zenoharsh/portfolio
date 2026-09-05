@@ -49,7 +49,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               playsInline
               className={`
                 object-cover w-full h-full transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]
-                ${isHovered ? "scale-105 opacity-40 blur-sm" : "scale-100 opacity-80"}
+                ${isHovered ? "scale-105 opacity-30 blur-md" : "scale-100 opacity-100"}
               `}
             />
           ) : (
@@ -59,7 +59,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               fill
               className={`
                 object-cover transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]
-                ${isHovered ? "scale-105 opacity-40 blur-sm" : "scale-100 opacity-80"}
+                ${isHovered ? "scale-105 opacity-30 blur-md" : "scale-100 opacity-100"}
               `}
               sizes="(max-width: 768px) 100vw, 800px"
             />
@@ -71,9 +71,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {/* Dark gradient for text readability */}
           <div
             className={`
-              absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent
+              absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/20 to-transparent
               transition-opacity duration-700 pointer-events-none
-              ${isHovered ? "opacity-100" : "opacity-80"}
+              ${isHovered ? "opacity-100 via-[#050505]/70" : "opacity-90"}
             `}
           />
 
