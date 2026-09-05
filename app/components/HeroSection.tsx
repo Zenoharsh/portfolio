@@ -1,4 +1,4 @@
-import { Globe, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 /* ─── Inline brand SVG icons ─── */
 function GithubIcon({ size = 17, className = "" }: { size?: number; className?: string }) {
@@ -17,10 +17,10 @@ function LinkedinIcon({ size = 17, className = "" }: { size?: number; className?
   );
 }
 
-function XIcon({ size = 17, className = "" }: { size?: number; className?: string }) {
+function LeetCodeIcon({ size = 17, className = "" }: { size?: number; className?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+      <path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.365.497 1.9-.038.535-.536.553-1.387.039-1.901l-2.609-2.636a5.055 5.055 0 0 0-2.445-1.337l2.467-2.503c.516-.514.498-1.366-.037-1.901-.535-.535-1.387-.552-1.902-.038l-10.1 10.101c-.981.982-1.497 2.337-1.497 3.814s.516 2.831 1.497 3.813l10.1 10.1c.467.467 1.111.662 1.823.662s1.356-.195 1.824-.662l2.697-2.606c.514-.515.496-1.367-.038-1.902-.534-.535-1.386-.553-1.9-.039zM20.811 11.25H10.667c-.735 0-1.333.598-1.333 1.333s.598 1.333 1.333 1.333h10.144c.735 0 1.333-.598 1.333-1.333s-.598-1.333-1.333-1.333z" />
     </svg>
   );
 }
@@ -28,8 +28,7 @@ function XIcon({ size = 17, className = "" }: { size?: number; className?: strin
 const socials = [
   { icon: GithubIcon, href: "https://github.com/Zenoharsh", label: "GitHub" },
   { icon: LinkedinIcon, href: "https://www.linkedin.com/in/harsh-raj-422b801a9/", label: "LinkedIn" },
-  { icon: XIcon, href: "https://twitter.com", label: "Twitter" },
-  { icon: Globe, href: "https://codeforces.com", label: "Codeforces", isLucide: true },
+  { icon: LeetCodeIcon, href: "https://leetcode.com/u/Zenoharsh/", label: "LeetCode" },
 ];
 
 export default function HeroSection() {
