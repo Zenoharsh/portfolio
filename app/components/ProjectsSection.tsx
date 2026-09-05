@@ -215,7 +215,7 @@ export default function ProjectsSection() {
       : projects.filter((p) => p.filterIds.includes(activeTag));
 
   return (
-    <div className="mt-16 mb-20 w-full overflow-hidden">
+    <div className="mt-16 mb-20 w-full">
       {/* ─── Skill Tags ─── */}
       <div id="skill-tags" className="flex flex-wrap items-center gap-2.5 mb-10">
         {skills.map(({ label, id }) => {

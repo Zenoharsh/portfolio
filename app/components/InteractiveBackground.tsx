@@ -70,7 +70,7 @@ class Particle {
   constructor(canvasWidth: number, canvasHeight: number) {
     this.x = Math.random() * canvasWidth;
     this.y = Math.random() * canvasHeight;
-    this.size = (Math.random() * 2 + 0.5) * 0.95; // Reduced size by 5%
+    this.size = (Math.random() * 1.5 + 0.3) * 0.8; // Reduced size
     this.density = Math.random() * 20 + 1;
     this.colorIndex = Math.floor(Math.random() * 2);
 
@@ -197,8 +197,8 @@ export default function InteractiveBackground() {
       // 50px cells for spatial hashing
       grid = new SpatialHashGrid(canvas.width, canvas.height, 50);
       
-      // Reduced particle count by 30% as requested
-      const numberOfParticles = Math.floor(Math.min(window.innerWidth / 2, 800) * 0.75); 
+      // Reduced particle count again by 25% as requested
+      const numberOfParticles = Math.floor(Math.min(window.innerWidth / 2, 800) * 0.55); 
       for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle(canvas.width, canvas.height));
       }
