@@ -9,7 +9,7 @@ export default function ContactSection() {
     <section id="contact" className="py-24 relative z-10 max-w-4xl mx-auto px-6">
       <div className="mb-16 text-center">
         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
-          Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-200">Touch</span>
+          Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ea64] to-[#a3e635]">Touch</span>
         </h2>
         <div className="h-1 w-20 bg-white/20 mt-6 mx-auto rounded-full"></div>
         <p className="text-gray-300 mt-6 max-w-lg mx-auto">

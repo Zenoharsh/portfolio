@@ -47,7 +47,7 @@ export default function HeroSection() {
           B.Tech Undergrad
         </span>
         <span className="flex items-center gap-2">
-          <span className="h-1 w-1 rounded-full bg-emerald-500" />
+          <span className="h-1 w-1 rounded-full bg-[#00ea64]" />
           Delhi, India
         </span>
       </div>
@@ -65,7 +65,7 @@ export default function HeroSection() {
               }}
             >
               {word === "code" || word === "intelligence" ? (
-                <span className="font-cursive italic font-light text-amber-500/90 pr-1">
+                <span className="font-cursive italic font-light text-[#00ea64]/90 pr-1">
                   {word}
                 </span>
               ) : (

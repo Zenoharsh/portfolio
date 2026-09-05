@@ -72,7 +72,7 @@ class Particle {
     this.y = Math.random() * canvasHeight;
     this.size = (Math.random() * 2 + 0.5) * 0.95; // Reduced size by 5%
     this.density = Math.random() * 20 + 1;
-    this.colorIndex = Math.floor(Math.random() * 4);
+    this.colorIndex = Math.floor(Math.random() * 2);
 
     this.baseVx = (Math.random() - 0.5) * 0.5;
     this.baseVy = (Math.random() - 0.5) * 0.5;
@@ -173,11 +173,9 @@ export default function InteractiveBackground() {
     if (!ctx) return;
 
     // Pre-render particles to memory (Opacity increased by 5% -> 0.63)
-    const redCanvas = createParticleCanvas("rgba(239, 68, 68, 0.63)");
-    const blueCanvas = createParticleCanvas("rgba(59, 130, 246, 0.63)");
-    const turquoiseCanvas = createParticleCanvas("rgba(20, 184, 166, 0.63)");
-    const purpleCanvas = createParticleCanvas("rgba(168, 85, 247, 0.63)");
-    const colorCanvases = [redCanvas, blueCanvas, turquoiseCanvas, purpleCanvas];
+    const greenCanvas = createParticleCanvas("rgba(0, 234, 100, 0.63)"); // HackerRank Green
+    const limeCanvas = createParticleCanvas("rgba(163, 230, 53, 0.63)");  // Lime 400
+    const colorCanvases = [greenCanvas, limeCanvas];
 
     let animationFrameId: number;
     let particlesArray: Particle[] = [];
@@ -246,8 +244,8 @@ export default function InteractiveBackground() {
   return (
     <div className="fixed inset-0 z-[-2] overflow-hidden bg-[#030303] pointer-events-none">
       {/* ─── Static Ambient Glows ─── */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-900/10 blur-[120px]" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-amber-900/10 blur-[150px]" />
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#00ea64]/10 blur-[120px]" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[#a3e635]/10 blur-[150px]" />
 
       {/* ─── Interactive Particle Canvas ─── */}
       <canvas

@@ -66,7 +66,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           )}
 
           {/* Glowing subtle gradient overlaid on media */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-violet-500/10 mix-blend-overlay pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#00ea64]/10 via-transparent to-[#a3e635]/10 mix-blend-overlay pointer-events-none" />
 
           {/* Dark gradient for text readability */}
           <div
@@ -235,7 +235,7 @@ export default function ProjectsSection() {
               `}
             >
               {isActive && (
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500/15 via-transparent to-transparent opacity-50 pointer-events-none" />
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#00ea64]/15 via-transparent to-transparent opacity-50 pointer-events-none" />
               )}
               <span className="relative pointer-events-none">{label}</span>
             </button>
