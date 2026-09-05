@@ -64,7 +64,7 @@ export default function AboutSection() {
             </div>
             <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col gap-1">
               <span className="text-white/60 text-xs uppercase tracking-wider font-semibold">Email</span>
-              <span className="text-white">Reach via LinkedIn</span>
+              <span className="text-white">harsh.dev4u@gmail.com</span>
             </div>
           </div>
         </motion.div>
