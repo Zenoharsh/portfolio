@@ -27,9 +27,7 @@ export default function Home() {
             <ExperienceSection />
           </AnimatedSection>
           
-          <AnimatedSection delay={0.1}>
-            <ProjectsSection />
-          </AnimatedSection>
+          <ProjectsSection />
           
           <AnimatedSection delay={0.1}>
             <ResumeSection />
