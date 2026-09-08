@@ -61,11 +61,11 @@ export default function ProjectsSection() {
   return (
     <motion.section
       id="projects"
-      initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, scale: 0.95, filter: "blur(24px)" }}
+      whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="mt-16 mb-20 w-full"
+      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+      className="w-full min-h-[100svh] flex flex-col justify-center py-20"
     >
       {/* ─── Skill Tags ─── */}
       <div className="flex flex-wrap items-center gap-2.5 mb-10 px-4 md:px-0">
