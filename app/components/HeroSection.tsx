@@ -76,7 +76,7 @@ export default function HeroSection() {
 
         {/* Subtitle */}
         <p className="hero-subtitle mt-8 text-[15px] md:text-[18px] leading-relaxed text-white/70 max-w-[500px] font-light tracking-wide">
-          Crafting elegant full-stack applications and AI-powered interfaces that merge design precision with engineering depth.
+          I build scalable full-stack applications and AI-powered interfaces that merge design precision with engineering depth.
         </p>
 
         {/* Action Row */}
