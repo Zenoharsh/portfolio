@@ -65,10 +65,18 @@ export default function ProjectsSection() {
       whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full min-h-[100svh] flex flex-col justify-center py-20"
+      className="w-full min-h-[100svh] flex flex-col justify-center py-10 lg:py-20 max-w-7xl mx-auto px-4 md:px-6 lg:px-8"
     >
+      {/* ─── Section Header ─── */}
+      <div className="mb-10 w-full">
+        <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+          Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ea64] to-[#a3e635]">Work</span>
+        </h2>
+        <div className="h-1 w-24 bg-white/20 mt-6 rounded-full"></div>
+      </div>
+
       {/* ─── Skill Tags ─── */}
-      <div className="flex flex-wrap items-center gap-2.5 mb-10 px-4 md:px-0">
+      <div className="flex flex-wrap items-center gap-2.5 mb-12">
         {skills.map(({ label, id }) => {
           const isActive = activeTag === id;
           return (
@@ -218,7 +226,7 @@ export default function ProjectsSection() {
               </button>
               <button 
                 onClick={handleNext}
-                className="absolute right-4 lg:left-[calc(55%+1rem)] top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-12 h-12 rounded-full bg-black/30 backdrop-blur-xl border border-white/20 text-white/80 hover:text-white hover:bg-white/20 transition-all duration-300 hover:scale-110"
+                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-12 h-12 rounded-full bg-black/30 backdrop-blur-xl border border-white/20 text-white/80 hover:text-white hover:bg-white/20 transition-all duration-300 hover:scale-110"
                 aria-label="Next Project"
               >
                 <ChevronRight size={24} />
