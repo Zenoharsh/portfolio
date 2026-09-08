@@ -16,8 +16,8 @@ export default function AnimatedSection({
   return (
     <motion.section
       id={id}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
       className={`relative w-full rounded-[2.5rem] real-glass border border-white/10 p-8 md:p-12 lg:p-16 mb-16 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] overflow-hidden ${className}`}
