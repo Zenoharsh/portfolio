@@ -1,10 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight, CheckCircle2, AlertCircle } from "lucide-react";
 import Image from "next/image";
 
 export default function ContactSection() {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("submitting");
+
+    const formData = new FormData(e.currentTarget);
+    // TODO: Replace with your actual Web3Forms Access Key
+    formData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY");
+    formData.append("subject", "New Contact from Portfolio");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.success) {
+        setStatus("success");
+        (e.target as HTMLFormElement).reset();
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch (error) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
+  };
   return (
     <section id="contact" className="py-24 relative z-10 max-w-4xl mx-auto px-6">
       <div className="mb-16 text-center">
@@ -58,10 +89,12 @@ export default function ContactSection() {
         </div>
 
         {/* Right: Simple Form UI */}
-        <form className="space-y-4 relative z-10" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-4 relative z-10" onSubmit={handleSubmit}>
           <div>
             <input
               type="text"
+              name="name"
+              required
               placeholder="Your Name"
               className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-white/30 transition-colors"
             />
@@ -69,19 +102,40 @@ export default function ContactSection() {
           <div>
             <input
               type="email"
+              name="email"
+              required
               placeholder="Your Email"
               className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-white/30 transition-colors"
             />
           </div>
           <div>
             <textarea
+              name="message"
+              required
               placeholder="Your Message"
               rows={4}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-white/30 transition-colors resize-none"
             ></textarea>
           </div>
-          <button className="w-full bg-white text-black font-semibold py-4 rounded-xl hover:bg-gray-200 transition-colors">
-            Send Message
+          
+          <button 
+            disabled={status === "submitting"}
+            className="w-full flex items-center justify-center gap-2 bg-white text-black font-semibold py-4 rounded-xl hover:bg-gray-200 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {status === "idle" && "Send Message"}
+            {status === "submitting" && "Sending..."}
+            {status === "success" && (
+              <>
+                <CheckCircle2 size={20} className="text-green-600" />
+                Sent Successfully!
+              </>
+            )}
+            {status === "error" && (
+              <>
+                <AlertCircle size={20} className="text-red-600" />
+                Failed to send
+              </>
+            )}
           </button>
         </form>
       </div>
