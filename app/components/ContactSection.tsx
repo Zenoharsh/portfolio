@@ -14,7 +14,7 @@ export default function ContactSection() {
 
     const formData = new FormData(e.currentTarget);
     // TODO: Replace with your actual Web3Forms Access Key
-    formData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY");
+    formData.append("access_key", "71d5db85-a3c7-415d-a99d-836ae6243572");
     formData.append("subject", "New Contact from Portfolio");
 
     try {
@@ -117,8 +117,8 @@ export default function ContactSection() {
               className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-white/30 transition-colors resize-none"
             ></textarea>
           </div>
-          
-          <button 
+
+          <button
             disabled={status === "submitting"}
             className="w-full flex items-center justify-center gap-2 bg-white text-black font-semibold py-4 rounded-xl hover:bg-gray-200 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
           >
