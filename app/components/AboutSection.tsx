@@ -2,38 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const skills = {
-  "Languages": [
-    { name: "Python", color: "#4B8BBE" },
-    { name: "C++", color: "#659AD2" },
-    { name: "JavaScript/TypeScript", color: "#3178C6" },
-    { name: "SQL", color: "#5084AB" },
-    { name: "PHP", color: "#777BB4" },
-  ],
-  "Cloud & DevOps": [
-    { name: "Docker", color: "#2496ED" },
-    { name: "CI/CD", color: "#FFFFFF" },
-    { name: "GCP", color: "#4285F4" },
-    { name: "AWS", color: "#FF9900" },
-    { name: "Linux (Ubuntu)", color: "#E95420" },
-    { name: "Nginx", color: "#00B345" },
-  ],
-  "Frameworks/Libraries": [
-    { name: "ReactJS", color: "#61DAFB" },
-    { name: "Node.js", color: "#43BA43" },
-    { name: "FastAPI", color: "#009688" },
-    { name: "ExpressJS", color: "#FFFFFF" },
-    { name: "TensorFlow", color: "#FF6F00" },
-    { name: "MediaPipe", color: "#00BCD4" },
-  ],
-  "Databases": [
-    { name: "PostgreSQL", color: "#4182B8" },
-    { name: "Supabase", color: "#3ECF8E" },
-    { name: "MongoDB", color: "#52BA53" },
-    { name: "SQLite3", color: "#0487CA" },
-    { name: "Vector DBs (pgvector)", color: "#00EA64" },
-  ],
-};
+import { techStack as skills } from "../data/content";
 
 export default function AboutSection() {
   return (
@@ -95,11 +64,12 @@ export default function AboutSection() {
                   {items.map((skill) => (
                     <div
                       key={skill.name}
-                      className="px-3 py-1.5 rounded-md text-xs font-medium border transition-colors cursor-default"
+                      className="skill-chip px-3 py-1.5 rounded-md text-xs font-medium border cursor-default"
                       style={{
                         backgroundColor: `${skill.color}10`, // 10% opacity for background
                         borderColor: `${skill.color}30`, // 30% opacity for border
-                        color: skill.color === "#000000" ? "#ffffff" : skill.color, // Fallback text color for black
+                        color: skill.color,
+                        ["--chip" as string]: skill.color,
                       }}
                     >
                       {skill.name}

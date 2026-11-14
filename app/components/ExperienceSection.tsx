@@ -1,43 +1,18 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 
-const experiences = [
-  {
-    role: "Software Engineering & Gen-AI Intern",
-    company: "Dattopant Thengadi Foundation",
-    location: "Delhi, India",
-    date: "Summer 2024", // Assuming based on typical student timelines
-    description:
-      "Deployed an automated AI RAG agent on an Ubuntu VPS utilizing FastAPI and Ollama. Led the optimization of backend architecture, reducing latency and boosting website performance by 11%.",
-  },
-  {
-    role: "Co-Founder",
-    company: "HASI Patna",
-    location: "Patna, India",
-    date: "2023 - Present",
-    description:
-      "Spearheaded technical development and product vision for this social initiative, building full-stack infrastructure to scale community outreach and operational efficiency.",
-  },
-  {
-    role: "Top 10 Finalist",
-    company: "Adobe Express Hackathon",
-    location: "Remote",
-    date: "2023",
-    description:
-      "Engineered a scalable RAG-based add-on for Adobe Express, enabling generative AI workflows to automate complex design and content generation tasks at scale.",
-  },
-  {
-    role: "Finalist",
-    company: "The Economic Times Hackathon",
-    location: "Remote",
-    date: "2023",
-    description:
-      "Developed 'Drishti', a geospatial global energy supply chain tracker utilizing multi-variable constraint optimization algorithms to visualize and predict supply chain vulnerabilities.",
-  },
-];
+import { experiences } from "../data/content";
 
 export default function ExperienceSection() {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 75%", "end 55%"],
+  });
+  const lineScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
   return (
     <section id="experience" className="py-24 relative z-10 max-w-4xl mx-auto px-6">
       <div className="mb-16">
@@ -47,7 +22,13 @@ export default function ExperienceSection() {
         <div className="h-1 w-20 bg-white/20 mt-4 rounded-full"></div>
       </div>
 
-      <div className="relative border-l border-white/10 ml-3 md:ml-6 space-y-12">
+      <div ref={timelineRef} className="relative border-l border-white/10 ml-3 md:ml-6 space-y-12">
+        {/* Scroll-driven progress line */}
+        <motion.div
+          aria-hidden
+          style={{ scaleY: lineScale }}
+          className="absolute -left-px top-0 bottom-0 w-px origin-top bg-gradient-to-b from-[#00ea64] via-[#00ea64] to-[#a3e635] shadow-[0_0_12px_rgba(0,234,100,0.6)]"
+        />
         {experiences.map((exp, index) => (
           <motion.div
             key={index}
@@ -55,10 +36,10 @@ export default function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="relative pl-8 md:pl-12"
+            className="group/exp relative pl-8 md:pl-12"
           >
             {/* Timeline Dot */}
-            <div className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+            <div className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-all duration-300 group-hover/exp:bg-[#00ea64] group-hover/exp:scale-150 group-hover/exp:shadow-[0_0_14px_rgba(0,234,100,0.9)]" />
 
             <div className="flex flex-col md:flex-row md:items-start justify-between mb-2">
               <div>

@@ -6,6 +6,7 @@ import ProjectsSection from "./components/ProjectsSection";
 import ResumeSection from "./components/ResumeSection";
 import ContactSection from "./components/ContactSection";
 import AnimatedSection from "./components/AnimatedSection";
+import CommandPalette from "./components/CommandPalette";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col min-w-0 px-6 lg:px-12 xl:px-20 py-6 overflow-y-auto relative z-10">
         {/* Floating Top Navbar */}
         <Navbar />
+        <CommandPalette />
 
         {/* Content container */}
         <div className="flex-1 w-full max-w-[1400px] mx-auto">

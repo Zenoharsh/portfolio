@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowUpRight, Globe, ChevronLeft, ChevronRight } from "lucide-react";
-import { projects, skills, type Project } from "../data/content";
-import { motion, AnimatePresence } from "framer-motion";
+import { projects, skills } from "../data/content";
+import { PROJECT_EVENT } from "../lib/actions";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 function GithubIcon({ size = 17, className = "" }: { size?: number; className?: string }) {
   return (
@@ -23,10 +24,59 @@ export default function ProjectsSection() {
     ? projects
     : projects.filter((p) => p.filterIds.includes(activeTag));
 
-  // Reset index when filter changes
-  useEffect(() => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const inViewRef = useRef(false);
+
+  const selectTag = (id: string) => {
+    setActiveTag(id);
     setCurrentIndex(0);
-  }, [activeTag]);
+  };
+
+  // Jump to a specific project (requested from the terminal / command palette)
+  useEffect(() => {
+    const handleShow = (e: Event) => {
+      const index = projects.findIndex((p) => p.id === (e as CustomEvent<string>).detail);
+      if (index < 0) return;
+      setActiveTag("all");
+      setCurrentIndex(index);
+    };
+    window.addEventListener(PROJECT_EVENT, handleShow);
+    return () => window.removeEventListener(PROJECT_EVENT, handleShow);
+  }, []);
+
+  // Track visibility so arrow keys only drive the carousel while it's on screen
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // 3D tilt for the media panel
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const springTiltX = useSpring(tiltX, { stiffness: 160, damping: 18 });
+  const springTiltY = useSpring(tiltY, { stiffness: 160, damping: 18 });
+  const rotateX = useTransform(springTiltY, [-0.5, 0.5], [7, -7]);
+  const rotateY = useTransform(springTiltX, [-0.5, 0.5], [-9, 9]);
+
+  const handleTilt = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse") return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    tiltX.set((e.clientX - rect.left) / rect.width - 0.5);
+    tiltY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const resetTilt = () => {
+    tiltX.set(0);
+    tiltY.set(0);
+  };
 
   // Auto-play interval (7 seconds)
   useEffect(() => {
@@ -37,12 +87,16 @@ export default function ProjectsSection() {
     }, 7000);
 
     return () => clearInterval(timer);
-  }, [filteredProjects.length, isHovered]);
+  }, [filteredProjects.length, isHovered, currentIndex]);
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (filteredProjects.length <= 1) return;
+      if (filteredProjects.length <= 1 || !inViewRef.current) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      // Don't hijack arrows while the visitor is typing or a dialog is open
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("input, textarea, select, [contenteditable], [role='dialog']")) return;
       if (e.key === "ArrowLeft") {
         setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
       } else if (e.key === "ArrowRight") {
@@ -60,6 +114,7 @@ export default function ProjectsSection() {
 
   return (
     <motion.section
+      ref={sectionRef}
       id="projects"
       initial={{ opacity: 0, scale: 0.95, filter: "blur(24px)" }}
       whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
@@ -82,7 +137,8 @@ export default function ProjectsSection() {
           return (
             <button
               key={id}
-              onClick={() => setActiveTag(id)}
+              onClick={() => selectTag(id)}
+              aria-pressed={isActive}
               className={`
                 relative px-6 py-3 rounded-full text-[13px] font-medium tracking-wide
                 border transition-all duration-500 ease-out cursor-pointer
@@ -126,10 +182,23 @@ export default function ProjectsSection() {
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 1.02, filter: "blur(10px)" }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0 flex flex-col lg:flex-row w-full h-full"
+                drag={filteredProjects.length > 1 ? "x" : false}
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.18}
+                dragSnapToOrigin
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -80 || info.velocity.x < -500) handleNext();
+                  else if (info.offset.x > 80 || info.velocity.x > 500) handlePrev();
+                }}
+                className="absolute inset-0 flex flex-col lg:flex-row w-full h-full touch-pan-y"
               >
                 {/* LEFT SIDE: Media */}
-                <div className="relative w-full lg:w-[55%] h-[40vh] lg:h-full bg-black/40 border-b lg:border-b-0 lg:border-r border-white/10 overflow-hidden flex items-center justify-center">
+                <div
+                  onPointerMove={handleTilt}
+                  onPointerLeave={resetTilt}
+                  style={{ perspective: 1200 }}
+                  className="relative w-full lg:w-[55%] h-[40vh] lg:h-full bg-black/40 border-b lg:border-b-0 lg:border-r border-white/10 overflow-hidden flex items-center justify-center"
+                >
                   {/* Blurred background copy for dynamic sizing padding */}
                   {activeProject.image && !activeProject.video && (
                     <Image 
@@ -139,7 +208,11 @@ export default function ProjectsSection() {
                       className="object-cover opacity-30 blur-2xl scale-110 pointer-events-none" 
                     />
                   )}
-                  
+
+                  <motion.div
+                    style={{ rotateX, rotateY }}
+                    className="absolute inset-0 z-10 will-change-transform"
+                  >
                   {activeProject.video ? (
                     <video
                       src={activeProject.video}
@@ -154,9 +227,11 @@ export default function ProjectsSection() {
                       src={activeProject.image}
                       alt={activeProject.title}
                       fill
-                      className="relative z-10 object-contain p-6 md:p-12 drop-shadow-2xl"
+                      draggable={false}
+                      className="relative z-10 object-contain p-6 md:p-12 drop-shadow-2xl select-none"
                     />
                   )}
+                  </motion.div>
                 </div>
 
                 {/* RIGHT SIDE: Content */}
@@ -232,6 +307,13 @@ export default function ProjectsSection() {
                 <ChevronRight size={24} />
               </button>
 
+              {/* Counter */}
+              <div className="absolute top-5 right-6 z-30 font-mono text-[11px] tracking-[0.18em] text-white/50 pointer-events-none">
+                <span className="text-[#00ea64]">{String(currentIndex + 1).padStart(2, "0")}</span>
+                {" / "}
+                {String(filteredProjects.length).padStart(2, "0")}
+              </div>
+
               {/* Progress Dots */}
               <div className="absolute bottom-6 left-0 right-0 z-30 flex justify-center gap-2">
                 {filteredProjects.map((_, idx) => (
@@ -239,11 +321,21 @@ export default function ProjectsSection() {
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
                     className={`
-                      h-1.5 rounded-full transition-all duration-500 cursor-pointer
-                      ${idx === currentIndex ? "w-8 bg-[#00ea64] shadow-[0_0_10px_rgba(0,234,100,0.5)]" : "w-2 bg-white/30 hover:bg-white/50"}
+                      relative h-1.5 rounded-full overflow-hidden transition-all duration-500 cursor-pointer
+                      ${idx === currentIndex ? "w-10 bg-white/25" : "w-2 bg-white/30 hover:bg-white/50"}
                     `}
                     aria-label={`Go to project ${idx + 1}`}
-                  />
+                    aria-current={idx === currentIndex ? "true" : undefined}
+                  >
+                    {idx === currentIndex && (
+                      <span
+                        key={`${activeProject.id}-${isHovered}`}
+                        className={`absolute inset-0 rounded-full bg-[#00ea64] shadow-[0_0_10px_rgba(0,234,100,0.5)] ${
+                          isHovered ? "" : "dot-progress"
+                        }`}
+                      />
+                    )}
+                  </button>
                 ))}
               </div>
             </>
