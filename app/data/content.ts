@@ -56,6 +56,16 @@ export const projects: Project[] = [
     liveUrl: "https://brainfoundation.in",
   },
   {
+    id: "moksha-ocr",
+    title: "Moksha OCR Entry System",
+    description: "Co-built the ID verification and entry system for Moksha 2026, NSUT's cultural fest with around 20k footfall. Students upload their college ID at registration, an OCR pipeline verifies it and emails a QR pass, and entry is a single scan at the gate. Runs on FastAPI with Cloud SQL, Redis and self-hosted models on a Google Cloud VM.",
+    image: "/premium_abstract_2_1788374786176.jpg",
+    tags: ["OCR", "FastAPI", "GCP", "Redis"],
+    filterIds: ["aiml", "fullstack"],
+    href: "https://github.com/ujjwaltwri/moksha_ocr",
+    githubUrl: "https://github.com/ujjwaltwri/moksha_ocr",
+  },
+  {
     id: "rla",
     title: "Red Lantern Analytica — Website Redesign",
     description: "Client redesign of the WordPress-based Red Lantern Analytica site as a fast Next.js front end. Content still comes from the existing WordPress backend, with media served through the new site, a refreshed brand identity and smooth scroll-reveal animations.",
