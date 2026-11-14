@@ -58,10 +58,10 @@ export const projects: Project[] = [
   {
     id: "rla",
     title: "Red Lantern Analytica — Website Redesign",
-    description: "Redesigned the Red Lantern Analytica website from the ground up as a modern Next.js and TypeScript application.",
+    description: "Client redesign of the WordPress-based Red Lantern Analytica site as a fast Next.js front end. Content still comes from the existing WordPress backend, with media served through the new site, a refreshed brand identity and smooth scroll-reveal animations.",
     image: "/premium_abstract_3_1788374801672.jpg",
-    tags: ["Next.js", "TypeScript", "Redesign"],
-    filterIds: ["fullstack"],
+    tags: ["Next.js", "Headless WordPress", "TypeScript"],
+    filterIds: ["fullstack", "freelance"],
     href: "https://redlanternanalytica-delta.vercel.app",
     githubUrl: "https://github.com/Zenoharsh/RLA",
     liveUrl: "https://redlanternanalytica-delta.vercel.app",
