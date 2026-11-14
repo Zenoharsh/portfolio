@@ -215,7 +215,7 @@ export default function InteractiveBackground() {
       particlesArray = [];
       grid = new SpatialHashGrid(canvas.width, canvas.height, 50);
 
-      const numberOfParticles = Math.floor(Math.min(window.innerWidth / 2, 800) * 0.55);
+      const numberOfParticles = Math.floor(Math.min(window.innerWidth / 2, 800) * 0.275);
       for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle(canvas.width, canvas.height));
       }

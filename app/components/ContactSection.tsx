@@ -56,7 +56,7 @@ export default function ContactSection() {
         <div className="flex flex-col justify-center space-y-8 relative z-10">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 shrink-0 rounded-full overflow-hidden border border-white/20 shadow-lg relative">
-              <Image src="/pfp.jpg" alt="Harsh Raj" fill className="object-cover" />
+              <Image src="/pfp.jpg" alt="Harsh Raj" fill sizes="56px" className="object-cover" />
             </div>
             <div>
               <h3 className="text-2xl font-bold text-white mb-1">Let's Connect</h3>

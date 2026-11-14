@@ -205,6 +205,7 @@ export default function ProjectsSection() {
                       src={activeProject.image} 
                       alt="" 
                       fill 
+                      sizes="(min-width: 1024px) 55vw, 100vw"
                       className="object-cover opacity-30 blur-2xl scale-110 pointer-events-none" 
                     />
                   )}
@@ -227,6 +228,7 @@ export default function ProjectsSection() {
                       src={activeProject.image}
                       alt={activeProject.title}
                       fill
+                      sizes="(min-width: 1024px) 55vw, 100vw"
                       draggable={false}
                       className="relative z-10 object-contain p-6 md:p-12 drop-shadow-2xl select-none"
                     />
