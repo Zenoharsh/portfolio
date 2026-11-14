@@ -137,3 +137,97 @@ export const projects: Project[] = [
     href: "#", // In progress, keeping it local
   }
 ];
+
+// ─── Shared profile data (used by sections, terminal and command palette) ───
+export const profile = {
+  name: "Harsh Raj",
+  email: "harsh.dev4u@gmail.com",
+  location: "Delhi, India",
+  socials: [
+    { label: "GitHub", href: "https://github.com/Zenoharsh" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/harsh-raj-422b801a9/" },
+    { label: "LeetCode", href: "https://leetcode.com/u/zenoharsh/" },
+  ],
+  resumes: [
+    { label: "Software Engineer", href: "/Harsh_Raj_SWE.pdf" },
+    { label: "AI / ML Engineer", href: "/Harsh_Raj_AIML.pdf" },
+    { label: "Full-Stack Developer", href: "/Harsh_Raj_FullStack.pdf" },
+  ],
+};
+
+export const sections = [
+  { id: "hero", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "resume", label: "Resume" },
+  { id: "contact", label: "Contact" },
+];
+
+export const techStack: Record<string, { name: string; color: string }[]> = {
+  "Languages": [
+    { name: "Python", color: "#4B8BBE" },
+    { name: "C++", color: "#659AD2" },
+    { name: "JavaScript/TypeScript", color: "#3178C6" },
+    { name: "SQL", color: "#5084AB" },
+    { name: "PHP", color: "#777BB4" },
+  ],
+  "Cloud & DevOps": [
+    { name: "Docker", color: "#2496ED" },
+    { name: "CI/CD", color: "#FFFFFF" },
+    { name: "GCP", color: "#4285F4" },
+    { name: "AWS", color: "#FF9900" },
+    { name: "Linux (Ubuntu)", color: "#E95420" },
+    { name: "Nginx", color: "#00B345" },
+  ],
+  "Frameworks/Libraries": [
+    { name: "ReactJS", color: "#61DAFB" },
+    { name: "Node.js", color: "#43BA43" },
+    { name: "FastAPI", color: "#009688" },
+    { name: "ExpressJS", color: "#FFFFFF" },
+    { name: "TensorFlow", color: "#FF6F00" },
+    { name: "MediaPipe", color: "#00BCD4" },
+  ],
+  "Databases": [
+    { name: "PostgreSQL", color: "#4182B8" },
+    { name: "Supabase", color: "#3ECF8E" },
+    { name: "MongoDB", color: "#52BA53" },
+    { name: "SQLite3", color: "#0487CA" },
+    { name: "Vector DBs (pgvector)", color: "#00EA64" },
+  ],
+};
+
+export const experiences = [
+  {
+    role: "Software Engineering & Gen-AI Intern",
+    company: "Dattopant Thengadi Foundation",
+    location: "Delhi, India",
+    date: "Summer 2024",
+    description:
+      "Deployed an automated AI RAG agent on an Ubuntu VPS utilizing FastAPI and Ollama. Led the optimization of backend architecture, reducing latency and boosting website performance by 11%.",
+  },
+  {
+    role: "Co-Founder",
+    company: "HASI Patna",
+    location: "Patna, India",
+    date: "2023 - Present",
+    description:
+      "Spearheaded technical development and product vision for this social initiative, building full-stack infrastructure to scale community outreach and operational efficiency.",
+  },
+  {
+    role: "Top 10 Finalist",
+    company: "Adobe Express Hackathon",
+    location: "Remote",
+    date: "2023",
+    description:
+      "Engineered a scalable RAG-based add-on for Adobe Express, enabling generative AI workflows to automate complex design and content generation tasks at scale.",
+  },
+  {
+    role: "Finalist",
+    company: "The Economic Times Hackathon",
+    location: "Remote",
+    date: "2023",
+    description:
+      "Developed 'Drishti', a geospatial global energy supply chain tracker utilizing multi-variable constraint optimization algorithms to visualize and predict supply chain vulnerabilities.",
+  },
+];

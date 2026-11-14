@@ -80,6 +80,18 @@ class Particle {
     this.vy = this.baseVy;
   }
 
+  /** Outward impulse from a click/tap shockwave. */
+  blast(x: number, y: number, radius: number, strength: number) {
+    const dx = this.x - x;
+    const dy = this.y - y;
+    const distSq = dx * dx + dy * dy;
+    if (distSq > radius * radius || distSq === 0) return;
+    const distance = Math.sqrt(distSq);
+    const force = (1 - distance / radius) * strength;
+    this.vx += (dx / distance) * force;
+    this.vy += (dy / distance) * force;
+  }
+
   update(mouse: { x: number; y: number }, grid: SpatialHashGrid, canvasWidth: number, canvasHeight: number) {
     // 1. Mouse Interaction (Attraction)
     const dx = mouse.x - this.x;
@@ -162,6 +174,16 @@ function createParticleCanvas(color: string): HTMLCanvasElement {
   return canvas;
 }
 
+const LINK_RADIUS = 190; // cursor → particle constellation lines
+const NEIGHBOR_LINK = 62; // particle ↔ particle lines near the cursor
+const BLAST_RADIUS = 320;
+
+interface Ripple {
+  x: number;
+  y: number;
+  age: number; // 0 → 1
+}
+
 export default function InteractiveBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -172,72 +194,163 @@ export default function InteractiveBackground() {
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
-    // Pre-render particles to memory (Opacity increased by 5% -> 0.63)
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const greenCanvas = createParticleCanvas("rgba(0, 234, 100, 0.63)"); // HackerRank Green
-    const limeCanvas = createParticleCanvas("rgba(163, 230, 53, 0.63)");  // Lime 400
+    const limeCanvas = createParticleCanvas("rgba(163, 230, 53, 0.63)"); // Lime 400
     const colorCanvases = [greenCanvas, limeCanvas];
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
     let particlesArray: Particle[] = [];
     let grid: SpatialHashGrid;
-    
+    let ripples: Ripple[] = [];
+    let pointerActive = false;
+
     const mouse = {
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
     };
 
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initSystem();
-    };
-
     const initSystem = () => {
       particlesArray = [];
-      // 50px cells for spatial hashing
       grid = new SpatialHashGrid(canvas.width, canvas.height, 50);
-      
-      // Reduced particle count again by 25% as requested
-      const numberOfParticles = Math.floor(Math.min(window.innerWidth / 2, 800) * 0.55); 
+
+      const numberOfParticles = Math.floor(Math.min(window.innerWidth / 2, 800) * 0.55);
       for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle(canvas.width, canvas.height));
       }
     };
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.globalCompositeOperation = 'screen';
+    const handleResize = () => {
+      // Mobile browsers fire resize when the URL bar collapses; only rebuild on width changes.
+      const widthChanged = canvas.width !== window.innerWidth;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      if (widthChanged || particlesArray.length === 0) initSystem();
+      if (reduceMotion) drawFrame();
+    };
 
-      // 1. Insert all particles into the Spatial Hash Grid
+    const drawLinks = () => {
+      if (!pointerActive) return;
+      const near: Particle[] = [];
+      const radiusSq = LINK_RADIUS * LINK_RADIUS;
+
+      ctx.lineWidth = 1;
+      for (let i = 0; i < particlesArray.length; i++) {
+        const p = particlesArray[i];
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const distSq = dx * dx + dy * dy;
+        if (distSq > radiusSq) continue;
+        near.push(p);
+
+        const alpha = (1 - Math.sqrt(distSq) / LINK_RADIUS) * 0.28;
+        ctx.strokeStyle = `rgba(0, 234, 100, ${alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(mouse.x, mouse.y);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+
+      // Link neighbours inside the cursor's field to form a small web
+      const neighborSq = NEIGHBOR_LINK * NEIGHBOR_LINK;
+      for (let i = 0; i < near.length; i++) {
+        for (let j = i + 1; j < near.length; j++) {
+          const dx = near[i].x - near[j].x;
+          const dy = near[i].y - near[j].y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq > neighborSq) continue;
+          const alpha = (1 - distSq / neighborSq) * 0.22;
+          ctx.strokeStyle = `rgba(163, 230, 53, ${alpha})`;
+          ctx.beginPath();
+          ctx.moveTo(near[i].x, near[i].y);
+          ctx.lineTo(near[j].x, near[j].y);
+          ctx.stroke();
+        }
+      }
+    };
+
+    const drawRipples = () => {
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.age += 0.022;
+        if (r.age >= 1) {
+          ripples.splice(i, 1);
+          continue;
+        }
+        const eased = 1 - Math.pow(1 - r.age, 3);
+        ctx.strokeStyle = `rgba(0, 234, 100, ${(1 - r.age) * 0.45})`;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, eased * BLAST_RADIUS, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    };
+
+    const drawFrame = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "screen";
+
       grid.clear();
       for (let i = 0; i < particlesArray.length; i++) {
         grid.insert(particlesArray[i]);
       }
 
-      // 2. Update and draw using grid lookups
       for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update(mouse, grid, canvas.width, canvas.height);
+        if (!reduceMotion) {
+          particlesArray[i].update(mouse, grid, canvas.width, canvas.height);
+        }
         particlesArray[i].draw(ctx, colorCanvases);
       }
-      
+
+      drawLinks();
+      drawRipples();
+    };
+
+    const animate = () => {
+      drawFrame();
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      pointerActive = true;
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      // Don't fire a shockwave while the visitor is using a control
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("a, button, input, textarea, [data-no-blast]")) return;
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].blast(e.clientX, e.clientY, BLAST_RADIUS, 14);
+      }
+      ripples.push({ x: e.clientX, y: e.clientY, age: 0 });
+    };
+
+    const handlePointerLeave = () => {
+      pointerActive = false;
     };
 
     window.addEventListener("resize", handleResize);
-    window.addEventListener("mousemove", handleMouseMove);
-    
     handleResize();
-    animate();
+
+    if (!reduceMotion) {
+      window.addEventListener("pointermove", handlePointerMove, { passive: true });
+      window.addEventListener("pointerdown", handlePointerDown, { passive: true });
+      document.documentElement.addEventListener("pointerleave", handlePointerLeave);
+      animate();
+    }
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      document.documentElement.removeEventListener("pointerleave", handlePointerLeave);
       cancelAnimationFrame(animationFrameId);
+      ripples = [];
     };
   }, []);
 
@@ -250,6 +363,7 @@ export default function InteractiveBackground() {
       {/* ─── Interactive Particle Canvas ─── */}
       <canvas
         ref={canvasRef}
+        aria-hidden
         className="absolute inset-0 w-full h-full pointer-events-none"
       />
     </div>

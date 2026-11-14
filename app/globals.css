@@ -101,3 +101,103 @@ body::before {
   transform: translateZ(0);
   backface-visibility: hidden;
 }
+
+/* ─── Anchor offset for the fixed navbar ─── */
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* ─── Cursor spotlight on glass cards (--mx / --my set in AnimatedSection) ─── */
+.spotlight::before,
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Soft glow that follows the cursor */
+.spotlight::before {
+  background: radial-gradient(
+    520px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(0, 234, 100, 0.07),
+    transparent 60%
+  );
+}
+
+/* Border that lights up nearest the cursor */
+.spotlight::after {
+  padding: 1px;
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(0, 234, 100, 0.65),
+    transparent 60%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+@media (hover: hover) {
+  .spotlight:hover::before,
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+}
+
+/* ─── Skill chips ─── */
+.skill-chip {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.skill-chip:hover {
+  transform: translateY(-3px);
+  border-color: var(--chip) !important;
+  box-shadow: 0 6px 20px -8px var(--chip);
+}
+
+/* ─── Terminal ─── */
+.terminal-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  vertical-align: text-bottom;
+  background: #00ea64;
+  animation: caretBlink 1.1s steps(1) infinite;
+}
+
+@keyframes caretBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ─── Carousel autoplay progress ─── */
+.dot-progress {
+  transform-origin: left;
+  animation: dotFill 7s linear both;
+}
+
+@keyframes dotFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-word,
+  .hero-subtitle,
+  .project-card,
+  .dot-progress,
+  .terminal-caret {
+    animation: none;
+    opacity: 1;
+  }
+}
