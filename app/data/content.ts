@@ -56,6 +56,17 @@ export const projects: Project[] = [
     liveUrl: "https://brainfoundation.in",
   },
   {
+    id: "rla",
+    title: "Red Lantern Analytica — Website Redesign",
+    description: "Redesigned the Red Lantern Analytica website from the ground up as a modern Next.js and TypeScript application.",
+    image: "/premium_abstract_3_1788374801672.jpg",
+    tags: ["Next.js", "TypeScript", "Redesign"],
+    filterIds: ["fullstack"],
+    href: "https://redlanternanalytica-delta.vercel.app",
+    githubUrl: "https://github.com/Zenoharsh/RLA",
+    liveUrl: "https://redlanternanalytica-delta.vercel.app",
+  },
+  {
     id: "drishti",
     title: "Drishti (ET Hackathon Finalist)",
     description: "Developed a geo-spatial global energy supply chain tracker utilizing geospatial data pipelines and a multi-variable constraint optimization algorithm.",

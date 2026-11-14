@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import { Home, User, Briefcase, FileText, Mail, Award, Search } from "lucide-react";
 import { openPalette, scrollToSection } from "../lib/actions";
 
@@ -14,7 +14,12 @@ const navItems = [
   { name: "Contact", id: "contact", icon: Mail },
 ];
 
+// ⌘ on Apple devices, Ctrl everywhere else (resolved on the client only)
+const subscribeNoop = () => () => {};
+const isApplePlatform = () => /Mac|iPhone|iPad/.test(navigator.platform);
+
 export default function Navbar() {
+  const isApple = useSyncExternalStore(subscribeNoop, isApplePlatform, () => false);
   const [scrolled, setScrolled] = useState(false);
   const [activeId, setActiveId] = useState("hero");
 
@@ -111,12 +116,12 @@ export default function Navbar() {
             type="button"
             onClick={openPalette}
             aria-label="Open command palette"
-            className="hidden lg:flex items-center gap-2 ml-2 pl-3 pr-2 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/50 transition-colors duration-300 hover:text-white hover:border-white/25 cursor-pointer"
+            className="hidden lg:flex items-center gap-2 ml-2 px-3 h-8 rounded-full border border-white/10 bg-white/[0.03] text-white/50 transition-colors duration-300 hover:text-white hover:border-white/25 cursor-pointer"
           >
-            <Search size={13} />
-            <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-[10px] font-mono tracking-wide">
-              ⌘K
-            </kbd>
+            <Search size={13} className="shrink-0" />
+            <span className="text-[11px] font-medium tracking-wide whitespace-nowrap leading-none">
+              {isApple ? "⌘ K" : "Ctrl K"}
+            </span>
           </button>
         </div>
       </motion.nav>
